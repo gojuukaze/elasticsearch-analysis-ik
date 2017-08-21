@@ -25,30 +25,24 @@
  */
 package org.wltea.analyzer.dic;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.logging.log4j.Logger;
 import org.elasticsearch.common.io.PathUtils;
 import org.elasticsearch.common.logging.ESLoggerFactory;
 import org.elasticsearch.plugin.analysis.ik.AnalysisIkPlugin;
 import org.wltea.analyzer.cfg.Configuration;
-import org.apache.logging.log4j.Logger;
+
+import java.io.*;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -433,6 +427,8 @@ public class Dictionary {
 	 * 加载远程扩展词典到主词库表
 	 */
 	private void loadRemoteExtDict() {
+	    int count=0;
+        logger.info("开始加载远程");
 		List<String> remoteExtDictFiles = getRemoteExtDictionarys();
 		for (String location : remoteExtDictFiles) {
 			logger.info("[Dict Loading] " + location);
@@ -442,14 +438,16 @@ public class Dictionary {
 				logger.error("[Dict Loading] " + location + "加载失败");
 				continue;
 			}
+            count+=lists.size();
 			for (String theWord : lists) {
 				if (theWord != null && !"".equals(theWord.trim())) {
 					// 加载扩展词典数据到主内存词典中
-					logger.info(theWord);
+//					logger.info(theWord);
 					_MainDict.fillSegment(theWord.trim().toLowerCase().toCharArray());
 				}
 			}
 		}
+        logger.info("加载远程字典完成，共加载 "+count+"个");
 
 	}
 
