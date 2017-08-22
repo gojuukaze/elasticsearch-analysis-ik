@@ -1,7 +1,5 @@
 package org.wltea.analyzer.dic;
 
-import java.io.IOException;
-
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpHead;
@@ -9,6 +7,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.Logger;
 import org.elasticsearch.common.logging.ESLoggerFactory;
+
+import java.io.IOException;
 
 public class Monitor implements Runnable {
 
@@ -68,8 +68,8 @@ public class Monitor implements Runnable {
 			//返回200 才做操作
 			if(response.getStatusLine().getStatusCode()==200){
 
-				if (((response.getLastHeader("Last-Modified")!=null) && !response.getLastHeader("Last-Modified").getValue().equalsIgnoreCase(last_modified))
-						||((response.getLastHeader("ETag")!=null) && !response.getLastHeader("ETag").getValue().equalsIgnoreCase(eTags))) {
+				if (((response.getLastHeader("Last-Modified")!=null) && !response.getLastHeader("Last-Modified").getValue().equals(last_modified))
+						||((response.getLastHeader("ETag")!=null) && !response.getLastHeader("ETag").getValue().equals(eTags))) {
 
 					// 远程词库有更新,需要重新加载词典，并修改last_modified,eTags
 					Dictionary.getSingleton().reLoadMainDict();
