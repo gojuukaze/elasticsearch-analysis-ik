@@ -6,8 +6,14 @@
 	<entry key="ext_dict"></entry>
 	 <!--用户可以在这里配置自己的扩展停止词字典-->
 	<entry key="ext_stopwords"></entry>
+
 	<!--用户可以在这里配置远程扩展字典 -->
 	<!-- <entry key="remote_ext_dict">words_location</entry> -->
+	<!--获取远程扩展字典的时间间隔，单位:s ,默认60s-->
+	<!-- <entry key="update_remote_ext_dict_period">60</entry> -->
+
 	<!--用户可以在这里配置远程扩展停止词字典-->
 	<!-- <entry key="remote_ext_stopwords">words_location</entry> -->
+	<!--获取远程扩展停止词字典的时间间隔，单位:s ,默认60s-->
+	<!-- <entry key="update_remote_stop_dict_period">60</entry> -->
 </properties>
