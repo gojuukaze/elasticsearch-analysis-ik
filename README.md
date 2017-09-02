@@ -31,7 +31,7 @@ Changes
      <entry key="update_remote_stop_dict_period">60</entry>
   ```
 
-- 在版本c4c498a里热更新词库有个bug，就算字典没修改还是会重新加载，原作者用equalsIgnoreCase()判断字符串相等，我改成了equals()后就没问题了
+- 在版本c4c498a里热更新词库有个bug，就算字典没修改还是会重新加载，原作者用equalsIgnoreCase()判断字符串相等，我改成了equals()后就没问题了  
   猜测可能和java版本有关
 
 
